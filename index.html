@@ -3,215 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OSINT Search Engine</title>
+    <title>🔍 OSINT Search Engine</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #6366f1;
+            --secondary: #ec4899;
+            --accent: #14b8a6;
+            --dark: #0f172a;
         }
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--dark) 0%, #1e293b 100%);
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            color: #e2e8f0;
         }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.3);
+        }
+        
+        header h1 { font-size: 3em; margin-bottom: 10px; }
+        header p { font-size: 1.1em; opacity: 0.95; }
         
         .container {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .search-section {
+            background: rgba(99, 102, 241, 0.1);
             padding: 40px;
-            max-width: 600px;
-            width: 100%;
-        }
-        
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 2.5em;
-        }
-        
-        .subtitle {
-            text-align: center;
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 0.95em;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
         }
         
         .search-box {
             display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 15px;
+            flex-wrap: wrap;
         }
         
         input, select {
             flex: 1;
-            padding: 12px 15px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
+            min-width: 200px;
+            padding: 15px 20px;
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            border-radius: 10px;
+            background: rgba(15, 23, 42, 0.5);
+            color: #e2e8f0;
             font-size: 1em;
-            transition: border-color 0.3s;
-        }
-        
-        input:focus, select:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-        
-        select {
-            flex: 0.8;
         }
         
         button {
-            padding: 12px 25px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 15px 40px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
-            font-size: 1em;
             font-weight: bold;
-            transition: transform 0.2s;
+            min-width: 150px;
         }
         
-        button:hover {
-            transform: translateY(-2px);
+        button:hover { transform: translateY(-2px); }
+        
+        .loading { display: none; text-align: center; padding: 60px 20px; }
+        .spinner { border: 4px solid rgba(99, 102, 241, 0.2); border-top: 4px solid var(--primary); border-radius: 50%; width: 60px; height: 60px; animation: spin 1s linear infinite; margin: 0 auto 20px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .results { display: none; }
+        .result-category { margin-bottom: 40px; }
+        .result-category h3 { font-size: 1.5em; margin-bottom: 20px; color: var(--accent); }
+        
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
         }
         
-        .loading {
-            display: none;
+        .social-card {
+            background: rgba(99, 102, 241, 0.1);
+            padding: 20px;
+            border-radius: 12px;
             text-align: center;
-            margin: 20px 0;
+            border: 2px solid rgba(99, 102, 241, 0.2);
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
         }
         
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
+        .social-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
         }
         
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        .social-card .icon { font-size: 2.5em; margin-bottom: 10px; }
+        .social-card .title { font-weight: bold; color: #e2e8f0; }
         
-        .results {
-            margin-top: 30px;
-            display: none;
-        }
-        
-        .result-item {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .result-item h3 {
-            color: #333;
-            margin-bottom: 5px;
-        }
-        
-        .result-item p {
-            color: #666;
-            font-size: 0.9em;
-            margin: 5px 0;
-        }
-        
-        .result-label {
-            display: inline-block;
-            background: #667eea;
-            color: white;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 0.8em;
-        }
-        
-        .error {
-            background: #fee;
-            color: #c33;
-            padding: 15px;
-            border-radius: 8px;
+        .error, .success {
+            padding: 20px;
+            border-radius: 12px;
             margin-top: 20px;
             display: none;
         }
         
-        .success {
-            background: #efe;
-            color: #3c3;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
-            display: none;
-        }
+        .error { background: rgba(239, 68, 68, 0.2); color: #fca5a5; }
+        .success { background: rgba(34, 197, 94, 0.2); color: #86efac; }
         
-        .variations {
-            background: #f0f4ff;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-        }
-        
-        .variations h4 {
-            color: #667eea;
-            margin-bottom: 10px;
-        }
-        
-        .variation-item {
-            background: white;
-            padding: 8px 12px;
-            border-radius: 4px;
-            margin-bottom: 5px;
-            font-family: monospace;
-            color: #333;
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 1px solid rgba(99, 102, 241, 0.2);
+            margin-top: 60px;
+            color: rgba(226, 232, 240, 0.6);
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <header>
         <h1>🔍 OSINT Search</h1>
-        <p class="subtitle">מנוע חיפוש חכם - חפש מייל, שם משתמש, טלפון או שם</p>
-        
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="הכנס מייל, שם משתמש, טלפון או שם...">
-            <select id="searchType">
-                <option value="email">📧 מייל</option>
-                <option value="username">👤 שם משתמש</option>
-                <option value="phone">📱 טלפון</option>
-                <option value="name">👨 שם</option>
-            </select>
-            <button onclick="performSearch()">חפש</button>
+        <p>מנוע חיפוש מקצועי - Intelligence Open Source</p>
+    </header>
+    
+    <div class="container">
+        <div class="search-section">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="הכנס מייל, שם משתמש, טלפון או שם...">
+                <select id="searchType">
+                    <option value="email">📧 מייל</option>
+                    <option value="username">👤 שם משתמש</option>
+                    <option value="phone">📱 טלפון</option>
+                    <option value="name">👨 שם</option>
+                </select>
+                <button onclick="performSearch()">🔍 חפש</button>
+            </div>
         </div>
         
         <div class="loading" id="loading">
             <div class="spinner"></div>
-            <p>חיפוש בעיצומו...</p>
+            <p>🔄 חיפוש בעיצומו...</p>
         </div>
         
         <div class="results" id="results">
-            <h2>📊 תוצאות</h2>
+            <h2>📊 תוצאות החיפוש</h2>
             <div id="resultsList"></div>
-        </div>
-        
-        <div class="variations" id="variations" style="display: none;">
-            <h4>🔄 וריאציות שחיפשנו:</h4>
-            <div id="variationsList"></div>
         </div>
         
         <div class="error" id="error"></div>
         <div class="success" id="success"></div>
     </div>
+    
+    <footer>
+        <p>⚖️ כלי זה מיועד לשימוש חוקי בלבד</p>
+        <p>💡 Made with ❤️ for Security & OSINT Research</p>
+    </footer>
     
     <script src="script.js"></script>
 </body>
