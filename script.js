@@ -32,6 +32,69 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function search(){
 
+    const query=input.value.trim();
+
+    if(query===""){
+        alert("יש להכניס ערך לחיפוש");
+        return;
+    }
+
+    results.innerHTML="";
+
+    CATEGORIES.forEach(category=>{
+
+        const card=document.createElement("div");
+        card.className="result-card";
+
+        let html=`<h3>${category.title}</h3>`;
+
+        html+=`
+        <button onclick="openCategory('${category.id}','${encodeURIComponent(query)}')">
+        🚀 פתח את כל הקטגוריה
+        </button><br><br>
+        `;
+
+        category.sources.forEach(source=>{
+
+            const url=source.url.replace("{query}",encodeURIComponent(query));
+
+            html+=`
+            <p>
+            <a href="${url}" target="_blank">
+            🔗 ${source.name}
+            </a>
+            </p>
+            `;
+
+        });
+
+        card.innerHTML=html;
+
+        results.appendChild(card);
+
+    });
+
+}function openCategory(categoryId,query){
+
+    const category=CATEGORIES.find(c=>c.id===categoryId);
+
+    if(!category) return;
+
+    category.sources.forEach((source,index)=>{
+
+        setTimeout(()=>{
+
+            window.open(
+                source.url.replace("{query}",query),
+                "_blank"
+            );
+
+        },index*400);
+
+    });
+
+}
+
         const query=input.value.trim();
 
         if(query===""){
