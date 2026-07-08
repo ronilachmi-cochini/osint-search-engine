@@ -1,1 +1,105 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OSINT Search Engine Pro</title>
 
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="topbar">
+    <h1>🔍 OSINT Search Engine Pro</h1>
+    <p>מערכת חיפוש במקורות מידע ציבוריים</p>
+</header>
+
+<main>
+
+<section class="search-card">
+
+<input
+id="searchInput"
+type="text"
+placeholder="הקלד שם, מייל, טלפון, IP, דומיין או שם משתמש">
+
+<select id="searchType">
+
+<option value="auto">זיהוי אוטומטי</option>
+
+<option value="email">מייל</option>
+
+<option value="phone">טלפון</option>
+
+<option value="username">שם משתמש</option>
+
+<option value="name">שם מלא</option>
+
+<option value="domain">דומיין</option>
+
+<option value="ip">IP</option>
+
+</select>
+
+<button id="searchButton">
+🔍 חפש
+</button>
+
+</section>
+
+<section class="categories">
+
+<h2>קטגוריות</h2>
+
+<label><input type="checkbox" checked> מנועי חיפוש</label>
+
+<label><input type="checkbox" checked> רשתות חברתיות</label>
+
+<label><input type="checkbox" checked> מייל</label>
+
+<label><input type="checkbox" checked> טלפון</label>
+
+<label><input type="checkbox" checked> דומיינים</label>
+
+<label><input type="checkbox" checked> IP</label>
+
+<label><input type="checkbox" checked> DNS</label>
+
+<label><input type="checkbox" checked> מסמכים</label>
+
+<label><input type="checkbox" checked> תמונות</label>
+
+<label><input type="checkbox" checked> חדשות</label>
+
+<label><input type="checkbox" checked> מפות</label>
+
+</section>
+
+<section id="results">
+
+<h2>תוצאות</h2>
+
+<div id="resultsContainer">
+
+עדיין אין תוצאות
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+
+OSINT Search Engine Pro © 2026
+
+</footer>
+
+<script src="config.js"></script>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
