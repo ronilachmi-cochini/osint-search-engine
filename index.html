@@ -3,59 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OSINT Search Engine</title>
-<style>
-body{
-font-family:Arial,sans-serif;
-background:#0f172a;
-color:#fff;
-text-align:center;
-margin:0;
-padding:40px;
-}
-h1{font-size:42px;}
-input{
-width:80%;
-max-width:600px;
-padding:15px;
-font-size:18px;
-border-radius:8px;
-border:none;
-margin:20px 0;
-}
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-gap:20px;
-max-width:900px;
-margin:auto;
-}
-.card{
-background:#1e293b;
-padding:20px;
-border-radius:12px;
-cursor:pointer;
-transition:.2s;
-}
-.card:hover{
-background:#334155;
-}
-</style>
+<title>OSINT Search Engine Pro</title>
+
+<link rel="stylesheet" href="style.css">
+
+<script src="config.js"></script>
+<script src="script.js" defer></script>
+
 </head>
+
 <body>
 
-<h1>🔎 OSINT Search Engine</h1>
-<p>בחר קטגוריה</p>
+<div class="container">
 
-<input placeholder="חיפוש בהמשך...">
+<h1>🔎 OSINT Search Engine Pro</h1>
+<p>מערכת חיפוש במקורות מידע ציבוריים</p>
 
-<div class="grid">
-<div class="card">👤 Username</div>
-<div class="card">📧 Email</div>
-<div class="card">🌐 Domain</div>
-<div class="card">📱 Phone</div>
-<div class="card">🌍 IP</div>
-<div class="card">🖼️ Image</div>
+<div class="search-box">
+
+<input
+id="searchInput"
+type="text"
+placeholder="הקלד שם, מייל, טלפון, IP, דומיין או שם משתמש">
+
+<select id="searchType">
+<option value="auto">זיהוי אוטומטי</option>
+<option value="name">שם</option>
+<option value="phone">טלפון</option>
+<option value="email">אימייל</option>
+<option value="domain">דומיין</option>
+<option value="ip">IP</option>
+<option value="username">שם משתמש</option>
+</select>
+
+<button id="searchButton">
+🔍 חפש
+</button>
+
+</div>
+
+<div id="resultsContainer"></div>
+
 </div>
 
 </body>
