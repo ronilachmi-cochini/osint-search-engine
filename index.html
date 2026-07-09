@@ -1,13 +1,110 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>OSINT Search Engine</title>
+<title>OSINT Intelligence Dashboard</title>
 
-<link rel="stylesheet" href="style.css">
+<style>
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+background:#070b14;
+color:#e5e7eb;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+padding:30px;
+}
+
+.header{
+background:#111827;
+border:1px solid #263244;
+border-radius:15px;
+padding:25px;
+text-align:center;
+}
+
+h1{
+margin:0;
+font-size:38px;
+color:#38bdf8;
+}
+
+.subtitle{
+margin-top:10px;
+color:#94a3b8;
+}
+
+.panel{
+margin-top:25px;
+background:#111827;
+border:1px solid #263244;
+border-radius:15px;
+padding:25px;
+}
+
+label{
+display:block;
+text-align:right;
+margin-top:10px;
+color:#cbd5e1;
+}
+
+select,
+input{
+width:100%;
+padding:15px;
+margin-top:8px;
+background:#0f172a;
+color:white;
+border:1px solid #334155;
+border-radius:8px;
+font-size:16px;
+}
+
+button{
+width:100%;
+margin-top:15px;
+padding:15px;
+background:#0284c7;
+color:white;
+border:none;
+border-radius:8px;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+}
+
+button:hover{
+background:#0369a1;
+}
+
+#results{
+margin-top:25px;
+}
+
+.result{
+background:#0f172a;
+border:1px solid #334155;
+border-radius:10px;
+padding:15px;
+margin-bottom:12px;
+}
+
+.result a{
+color:#22c55e;
+text-decoration:none;
+}
+
+</style>
 
 </head>
 
@@ -15,34 +112,175 @@
 
 <div class="container">
 
-<h1>🔎 OSINT SEARCH ENGINE</h1>
+<div class="header">
 
-<p>מערכת מודיעין ממקורות פתוחים</p>
+<h1>🔎 OSINT Intelligence Dashboard</h1>
+
+<div class="subtitle">
+Open Source Intelligence Platform
+</div>
+
+</div>
+
+<div class="panel">
+
+<label>סוג חיפוש</label>
 
 <select id="type">
 <option value="username">Username</option>
 <option value="email">Email</option>
 <option value="domain">Domain</option>
+<option value="ip">IP Address</option>
 <option value="phone">Phone</option>
-<option value="ip">IP</option>
 <option value="image">Image</option>
 </select>
 
+<label>נתון לחיפוש</label>
 
-<input id="query" placeholder="הזן נתון לחיפוש">
-
+<input id="query" placeholder="הזן נתון לבדיקה">
 
 <button onclick="searchOSINT()">
-🔍 חפש
+🔍 בצע חיפוש
 </button>
-
 
 <div id="results"></div>
 
+</div>
+<script>
+
+function searchOSINT(){
+
+let query = document.getElementById("query").value;
+let type = document.getElementById("type").value;
+let results = document.getElementById("results");
+
+
+if(query.trim()==""){
+
+results.innerHTML =
+`
+<div class="result">
+נא להזין נתון לחיפוש
+</div>
+`;
+
+return;
+
+}
+
+
+let database = {
+
+username:[
+
+["WhatsMyName",
+"https://whatsmyname.app/"],
+
+["Namechk",
+"https://namechk.com/"],
+
+["KnowEm",
+"https://knowem.com/"]
+
+],
+
+
+email:[
+
+["Have I Been Pwned",
+"https://haveibeenpwned.com/"],
+
+["EmailRep",
+"https://emailrep.io/"]
+
+],
+
+
+domain:[
+
+["WHOIS Lookup",
+"https://who.is/"],
+
+["DNS Checker",
+"https://dnschecker.org/"]
+
+],
+
+
+ip:[
+
+["IP Information",
+"https://ipinfo.io/"],
+
+["Abuse Database",
+"https://www.abuseipdb.com/"]
+
+],
+
+
+phone:[
+
+["Truecaller",
+"https://www.truecaller.com/"],
+
+["Phone Validator",
+"https://numverify.com/"]
+
+],
+
+
+image:[
+
+["Google Lens",
+"https://lens.google.com/"],
+
+["Yandex Images",
+"https://yandex.com/images/"]
+
+]
+
+};
+
+
+
+results.innerHTML =
+`
+<div class="result">
+<b>תוצאות עבור:</b> ${query}
+</div>
+`;
+
+
+
+database[type].forEach(function(item){
+
+results.innerHTML +=
+
+`
+<div class="result">
+
+<b>${item[0]}</b><br>
+
+<a href="${item[1]}" target="_blank">
+פתיחת כלי בדיקה
+</a>
 
 </div>
+`;
 
-<script src="script.js"></script>
+});
+
+
+}
+
+</script>
+</div>
+
+<div style="text-align:center;margin-top:30px;color:#64748b;">
+OSINT Intelligence Dashboard v1.0
+</div>
+
+</div>
 
 </body>
 </html>
