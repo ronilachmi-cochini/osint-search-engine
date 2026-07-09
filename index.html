@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>OSINT Search Engine</title>
 
 <style>
@@ -14,12 +13,13 @@ box-sizing:border-box;
 body{
 margin:0;
 font-family:Arial,sans-serif;
-background:#0f172a;
+background:#0b1120;
 color:white;
 }
 
 .container{
-max-width:950px;
+width:95%;
+max-width:1000px;
 margin:auto;
 padding:30px;
 text-align:center;
@@ -28,15 +28,15 @@ text-align:center;
 h1{
 font-size:42px;
 color:#38bdf8;
+margin-bottom:10px;
 }
 
 .subtitle{
-color:#cbd5e1;
-font-size:18px;
+color:#94a3b8;
 margin-bottom:30px;
 }
 
-.card{
+.panel{
 background:#1e293b;
 padding:25px;
 border-radius:20px;
@@ -60,6 +60,7 @@ color:white;
 
 button{
 background:#38bdf8;
+color:#000;
 font-weight:bold;
 cursor:pointer;
 }
@@ -68,21 +69,16 @@ button:hover{
 background:#0ea5e9;
 }
 
-#results{
-margin-top:25px;
-text-align:right;
-}
-
 .result{
 background:#334155;
 padding:15px;
-margin:12px 0;
+margin:15px 0;
 border-radius:12px;
+text-align:right;
 }
 
-a{
+.result a{
 color:#38bdf8;
-text-decoration:none;
 }
 
 .footer{
@@ -90,17 +86,12 @@ margin-top:40px;
 color:#64748b;
 }
 
-.badge{
-display:inline-block;
-background:#0ea5e9;
-color:black;
-padding:5px 12px;
-border-radius:20px;
-margin:5px;
+.card-title{
+color:#38bdf8;
+font-size:22px;
 }
 
 </style>
-
 </head>
 
 <body>
@@ -110,54 +101,39 @@ margin:5px;
 <h1>🔎 OSINT SEARCH ENGINE</h1>
 
 <div class="subtitle">
-Open Source Intelligence Platform
+מערכת מודיעין ממקורות פתוחים
 </div>
 
-<div>
-<span class="badge">Username</span>
-<span class="badge">Email</span>
-<span class="badge">Domain</span>
-<span class="badge">IP</span>
-<span class="badge">Phone</span>
-<span class="badge">Image</span>
+<div class="panel">
+
+<div class="card-title">
+בחר סוג חיפוש
 </div>
-
-<br>
-
-<div class="card">
 
 <select id="type">
-
-<option value="username">חיפוש Username</option>
-<option value="email">חיפוש Email</option>
-<option value="domain">חיפוש Domain</option>
-<option value="phone">חיפוש Phone</option>
-<option value="ip">חיפוש IP</option>
-<option value="image">חיפוש תמונה</option>
-
+<option value="username">Username</option>
+<option value="email">Email</option>
+<option value="domain">Domain</option>
+<option value="phone">Phone</option>
+<option value="ip">IP Address</option>
+<option value="image">Image</option>
 </select>
-
 
 <input id="query" placeholder="הזן נתון לחיפוש">
 
-
 <button onclick="searchOSINT()">
-🔍 בצע חיפוש
+🔍 חיפוש
 </button>
-
 
 <div id="results"></div>
 
-
 </div>
-
 
 <div class="footer">
-OSINT Search Engine v1.0
+OSINT Engine v1.0
 </div>
 
 </div>
-
 
 <script>
 
@@ -165,17 +141,12 @@ function searchOSINT(){
 
 let query=document.getElementById("query").value;
 let type=document.getElementById("type").value;
-
 let results=document.getElementById("results");
 
-
-if(!query){
-
-results.innerHTML="<div class='result'>נא להזין נתון לחיפוש</div>";
+if(query==""){
+results.innerHTML="<div class='result'>נא להזין נתון</div>";
 return;
-
 }
-
 
 let data={
 
@@ -210,20 +181,25 @@ image:[
 ]
 
 };
-
-
-results.innerHTML=
-"<h3>תוצאות עבור: "+query+"</h3>";
-
+  results.innerHTML="<h3>תוצאות עבור: "+query+"</h3>";
 
 data[type].forEach(function(site){
 
-results.innerHTML+=
+results.innerHTML +=
 `
 <div class="result">
-
 <b>${site[0]}</b><br>
-
 <a href="${site[1]}" target="_blank">
 פתח כלי חיפוש
 </a>
+</div>
+`;
+
+});
+
+}
+
+</script>
+
+</body>
+</html>
