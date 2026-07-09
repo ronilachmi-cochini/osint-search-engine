@@ -1,104 +1,59 @@
-document.addEventListener("DOMContentLoaded", () => {
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#0f172a;
+color:white;
+text-align:center;
+}
 
-    const input = document.getElementById("searchInput");
-    const type = document.getElementById("searchType");
-    const button = document.getElementById("searchButton");
-    const results = document.getElementById("resultsContainer");
+.container{
+max-width:900px;
+margin:auto;
+padding:40px;
+}
 
-    button.addEventListener("click", search);
+h1{
+font-size:42px;
+color:#38bdf8;
+}
 
-    input.addEventListener("keypress", function (e) {
-        if (e.key === "Enter") {
-            search();
-        }
-    });
+p{
+color:#cbd5e1;
+font-size:20px;
+}
 
-    function detectType(value) {
-        value = value.trim();
+select,input,button{
+width:80%;
+max-width:600px;
+padding:15px;
+margin:10px;
+border-radius:10px;
+border:none;
+font-size:18px;
+}
 
-        if (type.value !== "auto") {
-            return type.value;
-        }
+select,input{
+background:#334155;
+color:white;
+}
 
-        if (typeof SEARCH_TYPES !== "undefined") {
-            for (const key in SEARCH_TYPES) {
-                if (SEARCH_TYPES[key].regex.test(value)) {
-                    return key;
-                }
-            }
-        }
+button{
+background:#38bdf8;
+font-weight:bold;
+cursor:pointer;
+}
 
-        return "name";
-    }
+button:hover{
+background:#0ea5e9;
+}
 
-    function search() {
+#results{
+margin-top:20px;
+}
 
-        const query = input.value.trim();
-
-        if (query === "") {
-            alert("יש להכניס ערך לחיפוש");
-            return;
-        }
-
-        const detected = detectType(query);
-
-        results.innerHTML = "";
-
-        CATEGORIES.forEach(category => {
-
-            const card = document.createElement("div");
-            card.className = "result-card";
-
-            let html = `
-                <h3>${category.title}</h3>
-                <p><b>סוג חיפוש:</b> ${detected}</p>
-
-                <button onclick="openCategory('${category.id}','${encodeURIComponent(query)}')">
-                    🚀 פתח את כל הקטגוריה
-                </button>
-
-                <br><br>
-            `;
-
-            category.sources.forEach(source => {
-
-                const url = source.url.replace("{query}", encodeURIComponent(query));
-
-                html += `
-                    <p>
-                        <a href="${url}" target="_blank">
-                            🔗 ${source.name}
-                        </a>
-                    </p>
-                `;
-            });
-
-            card.innerHTML = html;
-            results.appendChild(card);
-
-        });
-
-    }
-
-});
-
-function openCategory(categoryId, query) {
-
-    const category = CATEGORIES.find(c => c.id === categoryId);
-
-    if (!category) return;
-
-    category.sources.forEach((source, index) => {
-
-        setTimeout(() => {
-
-            window.open(
-                source.url.replace("{query}", query),
-                "_blank"
-            );
-
-        }, index * 400);
-
-    });
-
+.result{
+background:#1e293b;
+padding:15px;
+margin:10px;
+border-radius:10px;
 }
