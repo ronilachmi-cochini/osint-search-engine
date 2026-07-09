@@ -3,6 +3,16 @@ const APP = {
   version: "2.0.0"
 };
 
+const SEARCH_TYPES = {
+  auto: { regex: /.*/ },
+  email: { regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ },
+  phone: { regex: /^[0-9+\-\s()]{7,}$/ },
+  ip: { regex: /^(?:\d{1,3}\.){3}\d{1,3}$/ },
+  domain: { regex: /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/ },
+  username: { regex: /^[a-zA-Z0-9._-]+$/ },
+  name: { regex: /.*/ }
+};
+
 const CATEGORIES = [
   {
     id: "search",
@@ -32,15 +42,4 @@ const CATEGORIES = [
     title: "📷 תמונות",
     sources: [
       { name: "Google Images", url: "https://www.google.com/search?tbm=isch&q={query}" },
-      { name: "Bing Images", url: "https://www.bing.com/images/search?q={query}" }
-    ]
-  },
-  {
-    id: "maps",
-    title: "🗺️ מפות",
-    sources: [
-      { name: "Google Maps", url: "https://www.google.com/maps/search/{query}" },
-      { name: "OpenStreetMap", url: "https://www.openstreetmap.org/search?query={query}" }
-    ]
-  }
-];
+      { name: "Bing Images", url: "https://www.bing.com
