@@ -1,150 +1,59 @@
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Segoe UI,Tahoma,sans-serif;
-}
-
 body{
+margin:0;
+font-family:Arial,sans-serif;
 background:#0f172a;
 color:white;
-min-height:100vh;
-}
-
-.topbar{
-background:#1e293b;
-padding:25px;
 text-align:center;
-border-bottom:3px solid #3b82f6;
 }
 
-.topbar h1{
-font-size:32px;
-  .navbar{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:15px 30px;
-background:#111827;
-border-bottom:2px solid #2563eb;
-position:sticky;
-top:0;
-z-index:999;
-}
-
-.logo{
-font-size:24px;
-font-weight:bold;
-}
-
-.menu{
-display:flex;
-gap:12px;
-}
-
-.menu button{
-background:#1f2937;
-border:none;
-color:white;
-padding:10px 18px;
-border-radius:8px;
-cursor:pointer;
-transition:.2s;
-}
-
-.menu button:hover{
-background:#2563eb;
-}
-margin-bottom:10px;
-}
-
-.topbar p{
-color:#cbd5e1;
-}
-
-main{
-max-width:1200px;
+.container{
+max-width:900px;
 margin:auto;
-padding:30px;
+padding:40px;
 }
 
-.search-card{
-background:#1e293b;
-padding:25px;
-border-radius:15px;
-display:flex;
-flex-wrap:wrap;
-gap:15px;
-margin-bottom:30px;
-box-shadow:0 0 20px rgba(0,0,0,.25);
+h1{
+font-size:42px;
+color:#38bdf8;
 }
 
-.search-card input,
-.search-card select{
-flex:1;
+p{
+color:#cbd5e1;
+font-size:20px;
+}
+
+select,input,button{
+width:80%;
+max-width:600px;
 padding:15px;
-border:none;
+margin:10px;
 border-radius:10px;
+border:none;
+font-size:18px;
+}
+
+select,input{
 background:#334155;
 color:white;
-font-size:16px;
 }
 
-.search-card button{
-padding:15px 30px;
-background:#2563eb;
-border:none;
-border-radius:10px;
-color:white;
-font-size:16px;
+button{
+background:#38bdf8;
+font-weight:bold;
 cursor:pointer;
-transition:.2s;
 }
 
-.search-card button:hover{
-background:#1d4ed8;
-}
-
-.categories{
-background:#1e293b;
-padding:25px;
-border-radius:15px;
-margin-bottom:30px;
-}
-
-.categories h2{
-margin-bottom:20px;
-}
-
-.categories label{
-display:inline-block;
-margin:8px;
-padding:10px 15px;
-background:#334155;
-border-radius:25px;
-cursor:pointer;
+button:hover{
+background:#0ea5e9;
 }
 
 #results{
-background:#1e293b;
-padding:25px;
-border-radius:15px;
-}
-
-#resultsContainer{
 margin-top:20px;
 }
 
-.result-card{
-background:#334155;
+.result{
+background:#1e293b;
 padding:15px;
+margin:10px;
 border-radius:10px;
-margin-bottom:10px;
-}
-
-footer{
-margin-top:40px;
-padding:20px;
-text-align:center;
-color:#94a3b8;
 }
