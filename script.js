@@ -7,134 +7,94 @@ document.addEventListener("DOMContentLoaded", () => {
 
     button.addEventListener("click", search);
 
-    input.addEventListener("keypress", function(e){
-        if(e.key==="Enter"){
+    input.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
             search();
         }
     });
 
-    function detectType(value){
+    function detectType(value) {
+        value = value.trim();
 
-        value=value.trim();
-
-        if(type.value!=="auto")
+        if (type.value !== "auto") {
             return type.value;
+        }
 
-        for(const key in SEARCH_TYPES){
-
-            if(SEARCH_TYPES[key].regex.test(value))
+        for (const key in SEARCH_TYPES) {
+            if (SEARCH_TYPES[key].regex.test(value)) {
                 return key;
-
+            }
         }
 
         return "name";
     }
 
-    function search(){
+    function search() {
 
-    const query=input.value.trim();
+        const query = input.value.trim();
 
-    if(query===""){
-        alert("יש להכניס ערך לחיפוש");
-        return;
-    }
-
-    results.innerHTML="";
-
-    CATEGORIES.forEach(category=>{
-
-        const card=document.createElement("div");
-        card.className="result-card";
-
-        let html=`<h3>${category.title}</h3>`;
-
-        html+=`
-        <button onclick="openCategory('${category.id}','${encodeURIComponent(query)}')">
-        🚀 פתח את כל הקטגוריה
-        </button><br><br>
-        `;
-
-        category.sources.forEach(source=>{
-
-            const url=source.url.replace("{query}",encodeURIComponent(query));
-
-            html+=`
-            <p>
-            <a href="${url}" target="_blank">
-            🔗 ${source.name}
-            </a>
-            </p>
-            `;
-
-        });
-
-        card.innerHTML=html;
-
-        results.appendChild(card);
-
-    });
-
-}function openCategory(categoryId,query){
-
-    const category=CATEGORIES.find(c=>c.id===categoryId);
-
-    if(!category) return;
-
-    category.sources.forEach((source,index)=>{
-
-        setTimeout(()=>{
-
-            window.open(
-                source.url.replace("{query}",query),
-                "_blank"
-            );
-
-        },index*400);
-
-    });
-
-}
-
-        const query=input.value.trim();
-
-        if(query===""){
+        if (query === "") {
             alert("יש להכניס ערך לחיפוש");
             return;
         }
 
-        const detected=detectType(query);
+        const detected = detectType(query);
 
-        results.innerHTML="";
+        results.innerHTML = "";
 
-        CATEGORIES.forEach(category=>{
+        CATEGORIES.forEach(category => {
 
-            const card=document.createElement("div");
-            card.className="result-card";
+            const card = document.createElement("div");
+            card.className = "result-card";
 
-            let html=`<h3>${category.title}</h3>`;
-            html+=`<p><b>סוג חיפוש:</b> ${detected}</p><br>`;
+            let html = `<h3>${category.title}</h3>`;
+            html += `<p><b>סוג חיפוש:</b> ${detected}</p>`;
 
-            category.sources.forEach(source=>{
+            html += `
+            <button onclick="openCategory('${category.id}','${encodeURIComponent(query)}')">
+            🚀 פתח את כל הקטגוריה
+            </button><br><br>
+            `;
 
-                const url=source.url.replace("{query}",encodeURIComponent(query));
+            category.sources.forEach(source => {
 
-                html+=`
+                const url = source.url.replace("{query}", encodeURIComponent(query));
+
+                html += `
                 <p>
-                🔗
-                <a href="${url}" target="_blank">
-                ${source.name}
-                </a>
+                    <a href="${url}" target="_blank">
+                    🔗 ${source.name}
+                    </a>
                 </p>
                 `;
-
             });
 
-            card.innerHTML=html;
-
+            card.innerHTML = html;
             results.appendChild(card);
 
         });
 
     }
+
+    window.openCategory = function(categoryId, query) {
+
+        const category = CATEGORIES.find(c => c.id === categoryId);
+
+        if (!category) return;
+
+        category.sources.forEach((source, index) => {
+
+            setTimeout(() => {
+
+                window.open(
+                    source.url.replace("{query}", query),
+                    "_blank"
+                );
+
+            }, index * 400);
+
+        });
+
+    };
 
 });
