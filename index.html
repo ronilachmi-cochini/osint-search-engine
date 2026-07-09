@@ -1,205 +1,31 @@
-<DOCTYPE html!>
+העלאת הקובץ המצורף נכשלה. לא נבחר אף פריט
+
+דילוג לתוכן
+שימוש ב-Gmail עם קוראי מסך
+אין יותר תמיכה בגרסה הזו של הדפדפן. צריך לשדרג לגרסה נתמכת של הדפדפן.
+1 מתוך 6,195
+(ללא נושא)
+דואר נכנס
+
+רוני לחמי <roni.lachmi@gmail.com‏>
+קבצים מצורפים
+14:06 ‎(לפני 0 דקות)‎
+אני
+
+ קובץ מצורף אחד
+  •  נסרק על ידי Gmail
+Help panel header selected. To move the Help panel, press space bar to grab it. Use arrow keys to move, and space bar to drop.
+<!DOCTYPE html>
 <html lang="he" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OSINT Search Engine</title>
-
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>OSINT Search Engine</title>
 <style>
-*{
-box-sizing:border-box;
-}
-
-body{
-margin:0;
-font-family:Arial,sans-serif;
-background:#0b1120;
-color:white;
-}
-
-.container{
-width:95%;
-max-width:1000px;
-margin:auto;
-padding:30px;
-text-align:center;
-}
-
-h1{
-font-size:42px;
-color:#38bdf8;
-margin-bottom:10px;
-}
-
-.subtitle{
-color:#94a3b8;
-margin-bottom:30px;
-}
-
-.panel{
-background:#1e293b;
-padding:25px;
-border-radius:20px;
-box-shadow:0 0 25px #000;
-}
-
-select,input,button{
-width:90%;
-max-width:700px;
-padding:15px;
-margin:10px;
-border-radius:12px;
-border:none;
-font-size:18px;
-}
-
-select,input{
-background:#334155;
-color:white;
-}
-
-button{
-background:#38bdf8;
-color:#000;
-font-weight:bold;
-cursor:pointer;
-}
-
-button:hover{
-background:#0ea5e9;
-}
-
-.result{
-background:#334155;
-padding:15px;
-margin:15px 0;
-border-radius:12px;
-text-align:right;
-}
-
-.result a{
-color:#38bdf8;
-}
-
-.footer{
-margin-top:40px;
-color:#64748b;
-}
-
-.card-title{
-color:#38bdf8;
-font-size:22px;
-}
-
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
-<h1>🔎 OSINT SEARCH ENGINE</h1>
-
-<div class="subtitle">
-מערכת מודיעין ממקורות פתוחים
-</div>
-
-<div class="panel">
-
-<div class="card-title">
-בחר סוג חיפוש
-</div>
-
-<select id="type">
-<option value="username">Username</option>
-<option value="email">Email</option>
-<option value="domain">Domain</option>
-<option value="phone">Phone</option>
-<option value="ip">IP Address</option>
-<option value="image">Image</option>
-</select>
-
-<input id="query" placeholder="הזן נתון לחיפוש">
-
-<button onclick="searchOSINT()">
-🔍 חיפוש
-</button>
-
-<div id="results"></div>
-
-</div>
-
-<div class="footer">
-OSINT Engine v1.0
-</div>
-
-</div>
-
+body{margin:0;font-family:Arial;background:#0f172a;color:white}.container{max-width:900px;margin:auto;padding:30px;text-align:center}h1{color:#38bdf8}.box{background:#1e293b;padding:25px;border-radius:20px}input,select,button{width:90%;padding:15px;margin:10px;border-radius:10px;border:0;font-size:18px}input,select{background:#334155;color:white}button{background:#38bdf8;font-weight:bold}.result{background:#334155;padding:15px;margin:10px;border-radius:10px;text-align:right}.result a{color:#38bdf8}
+</style></head>
+<body><div class="container"><h1>🔎 OSINT SEARCH ENGINE</h1><p>Open Source Intelligence Platform</p><div class="box">
+<select id="type"><option value="username">Username</option><option value="email">Email</option><option value="domain">Domain</option><option value="phone">Phone</option><option value="ip">IP</option><option value="image">Image</option></select>
+<input id="query" placeholder="הזן נתון לחיפוש"><button onclick="searchOSINT()">חפש</button><div id="results"></div></div></div>
 <script>
-
-function searchOSINT(){
-
-let query=document.getElementById("query").value;
-let type=document.getElementById("type").value;
-let results=document.getElementById("results");
-
-if(query==""){
-results.innerHTML="<div class='result'>נא להזין נתון</div>";
-return;
-}
-
-let data={
-
-username:[
-["WhatsMyName","https://whatsmyname.app/"],
-["Namechk","https://namechk.com/"]
-],
-
-email:[
-["Have I Been Pwned","https://haveibeenpwned.com/"],
-["EmailRep","https://emailrep.io/"]
-],
-
-domain:[
-["WHOIS","https://who.is/"],
-["SecurityTrails","https://securitytrails.com/"]
-],
-
-phone:[
-["Truecaller","https://www.truecaller.com/"],
-["NumVerify","https://numverify.com/"]
-],
-
-ip:[
-["IPInfo","https://ipinfo.io/"],
-["AbuseIPDB","https://www.abuseipdb.com/"]
-],
-
-image:[
-["Google Lens","https://lens.google.com/"],
-["Yandex Images","https://yandex.com/images/"]
-]
-
-};
-  results.innerHTML="<h3>תוצאות עבור: "+query+"</h3>";
-
-data[type].forEach(function(site){
-
-results.innerHTML +=
-`
-<div class="result">
-<b>${site[0]}</b><br>
-<a href="${site[1]}" target="_blank">
-פתח כלי חיפוש
-</a>
-</div>
-`;
-
-});
-
-}
-
-</script>
-
-</body>
-</html>
+function searchOSINT(){let q=document.getElementById('query').value,t=document.getElementById('type').value,r=document.getElementById('results');if(!q){r.innerHTML='נא להזין נתון';return}let s={username:[['WhatsMyName','https://whatsmyname.app/'],['Namechk','https://namechk.com/']],email:[['Have I Been Pwned','https://haveibeenpwned.com/'],['EmailRep','https://emailrep.io/']],domain:[['WHOIS','https://who.is/'],['SecurityTrails','https://securitytrails.com/']],phone:[['Truecaller','https://www.truecaller.com/'],['NumVerify','https://numverify.com/']],ip:[['IPInfo','https://ipinfo.io/'],['AbuseIPDB','https://www.abuseipdb.com/']],image:[['Google Lens','https://lens.google.com/'],['Yandex Images','https://yandex.com/images/']]};r.innerHTML='<h3>תוצאות עבור: '+q+'</h3>';s[t].forEach(x=>r.innerHTML+='<div class="result"><b>'+x[0]+'</b><br><a target="_blank" href="'+x[1]+'">פתח כלי חיפוש</a></div>')}
+</script></body></html>
+index.html
+מציג את index.html.
