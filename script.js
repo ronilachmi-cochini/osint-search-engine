@@ -1,59 +1,66 @@
-body{
-margin:0;
-font-family:Arial,sans-serif;
-background:#0f172a;
-color:white;
-text-align:center;
+function searchOSINT(){
+
+let query=document.getElementById("query").value;
+let type=document.getElementById("type").value;
+let results=document.getElementById("results");
+
+if(query==""){
+results.innerHTML="<div class='result'>נא להזין נתון לחיפוש</div>";
+return;
 }
 
-.container{
-max-width:900px;
-margin:auto;
-padding:40px;
-}
+let sources={
 
-h1{
-font-size:42px;
-color:#38bdf8;
-}
+username:[
+["WhatsMyName","https://whatsmyname.app/"],
+["Namechk","https://namechk.com/"]
+],
 
-p{
-color:#cbd5e1;
-font-size:20px;
-}
+email:[
+["Have I Been Pwned","https://haveibeenpwned.com/"],
+["EmailRep","https://emailrep.io/"]
+],
 
-select,input,button{
-width:80%;
-max-width:600px;
-padding:15px;
-margin:10px;
-border-radius:10px;
-border:none;
-font-size:18px;
-}
+domain:[
+["WHOIS","https://who.is/"],
+["SecurityTrails","https://securitytrails.com/"]
+],
 
-select,input{
-background:#334155;
-color:white;
-}
+phone:[
+["Truecaller","https://www.truecaller.com/"],
+["NumVerify","https://numverify.com/"]
+],
 
-button{
-background:#38bdf8;
-font-weight:bold;
-cursor:pointer;
-}
+ip:[
+["IPInfo","https://ipinfo.io/"],
+["AbuseIPDB","https://www.abuseipdb.com/"]
+],
 
-button:hover{
-background:#0ea5e9;
-}
+image:[
+["Google Lens","https://lens.google.com/"],
+["Yandex Images","https://yandex.com/images/"]
+]
 
-#results{
-margin-top:20px;
-}
+};
 
-.result{
-background:#1e293b;
-padding:15px;
-margin:10px;
-border-radius:10px;
+
+results.innerHTML="<h3>תוצאות עבור: "+query+"</h3>";
+
+
+sources[type].forEach(function(site){
+
+results.innerHTML +=
+
+`
+<div class="result">
+<b>${site[0]}</b><br>
+<a href="${site[1]}" target="_blank">
+פתח כלי חיפוש
+</a>
+</div>
+`;
+
+});
+
+
 }
